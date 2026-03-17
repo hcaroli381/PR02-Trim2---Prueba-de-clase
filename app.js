@@ -124,7 +124,127 @@ btnNuevaPartida.addEventListener('click', () => {
 // -------------------------------------
 
 // TODO: Variables del juego
+const btnPiedra = document.querySelector("#btnPiedra");
+const btnPapel = document.querySelector("#btnPapel");
+const btnTijera = document.querySelector("#btnTijera");
+const btnReiniciar = document.querySelector("#btnReiniciarPPT");
+const total = document.querySelector("#totalPPT");
+const mensaje = document.querySelector("#mensajePPT");
+const ganadas = document.querySelector("#ganadasPPT");
+const perdidas = document.querySelector("#perdidasPPT");
+const empates = document.querySelector("#empatadasPPT");
+const eleccionJugadorDom = document.querySelector("#eleccionJugador");
+const eleccionMaquinaDom = document.querySelector("#eleccionMaquina");
+const listaHistorialPPT = document.querySelector("#listaHistorialPPT");
+let eleccionJugador;
+let contadorEmpates = 0;
+let contadorGanadas = 0;
+let contadorPerdidas = 0;
+let historialResultados = [];
 
 // TODO: Funciones del juego
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+function eleccionIA() {
+    let eleccion;
+    eleccion = getRandomInt(3);
+    return eleccion;
+}
+function determinarGanador(eleccionJ, eleccionIa) {
+    
+    if ((eleccionJ == 0 && eleccionIa == 2)||(eleccionJ == 1 && eleccionIa == 0)||(eleccionJ == 2 && eleccionIa == 1)) {
+        mensaje.innerHTML = "Victoria!!";
+        contadorGanadas++;
+        
+    } else if (eleccionJ == eleccionIa) {
+        mensaje.innerHTML = "Empate!";
+        contadorEmpates++;
+       
+    }else{
+        mensaje.innerHTML = "Derrota!!";
+        contadorPerdidas++;
+      
+    }
+}
+function mostrarEleccion(eleccion) {
+    let eleccionString = "";
+    if (eleccion == 0) {
+        eleccionString = "Piedra";
+    } else if (eleccion == 1) {
+        eleccionString = "Papel";
+    } else {
+        eleccionString = "Tijera";
+    }
+    return eleccionString;
+}
+function actualizarEstadisticas() {
+    ganadas.innerHTML = `${contadorGanadas}`;
+    total.innerHTML = `${contadorGanadas+contadorEmpates+contadorPerdidas}`;
+    perdidas.innerHTML = `${contadorPerdidas}`;
+    empates.innerHTML = `${contadorEmpates}`;
+}
+function borrarHistorial() {
+    contadorGanadas = 0;
+    contadorEmpates = 0;
+    contadorPerdidas = 0;
+    eleccionJugadorDom.innerHTML = "";
+    eleccionMaquinaDom.innerHTML = "";
+    mensaje.innerHTML = "";
+    actualizarEstadisticas();
+    localStorage.removeItem("historialPartidas");
+    location.reload();
+}
+function actualizarHistorial() {
+    const jugador = mostrarEleccion(eleccionJugador);
+    const maquina = mostrarEleccion(eleccionIA());
+    let resultado;
+    const jsonHistorial = { "jugador": jugador, "maquina": maquina, "resultado" : resultado };
+    const lsHistorialStr = localStorage.getItem("historialPartidas");
+    let lsHistorialJSON = [];
+    if (lsHistorialStr != null) {
+        lsHistorialJSON = JSON.parse(lsHistorialStr);
+    }
+    lsHistorialJSON.push(jsonHistorial);
+    listarHistorial(jsonHistorial);
+    localStorage.setItem("historialPartidas", JSON.stringify(lsHistorialJSON));
 
+}
+function listarHistorial(historial) {
+    listaHistorialPPT.innerHTML += `Jugador : ${historial.jugador} Maquina :${historial.maquina} Resultado : ${historial.resultado}`;
+
+}
 // TODO: Eventos del juego
+btnPiedra.addEventListener('click', () => {
+    let eleccionMaquina;
+    eleccionJugador = 0; 
+    eleccionMaquina = eleccionIA();
+    eleccionJugadorDom.innerHTML = `${mostrarEleccion(eleccionJugador)}`;
+    eleccionMaquinaDom.innerHTML = `${mostrarEleccion(eleccionMaquina)}`;
+    determinarGanador(eleccionJugador, eleccionMaquina);
+    actualizarEstadisticas();
+    actualizarHistorial();
+});
+btnPapel.addEventListener('click', () => {
+    let eleccionMaquina;
+    eleccionJugador = 1; 
+    eleccionMaquina = eleccionIA();
+    eleccionJugadorDom.innerHTML = `${mostrarEleccion(eleccionJugador)}`;
+        eleccionMaquinaDom.innerHTML = `${mostrarEleccion(eleccionMaquina)}`;
+    determinarGanador(eleccionJugador, eleccionMaquina);
+    actualizarEstadisticas();
+    actualizarHistorial();
+});
+btnTijera.addEventListener('click', () => {
+    let eleccionMaquina;
+    eleccionJugador = 2; 
+    eleccionMaquina = eleccionIA();
+    eleccionJugadorDom.innerHTML = `${mostrarEleccion(eleccionJugador)}`;
+        eleccionMaquinaDom.innerHTML = `${mostrarEleccion(eleccionMaquina)}`;
+    determinarGanador(eleccionJugador, eleccionMaquina);
+    actualizarEstadisticas();
+    actualizarHistorial();
+});
+btnReiniciar.addEventListener('click', () => {
+    borrarHistorial();
+});
