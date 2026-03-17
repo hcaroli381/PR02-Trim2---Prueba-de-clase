@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Arcade Web - Examen JavaScript</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <h1>Mini Arcade Web</h1>
+      <p>
+        Tres juegos clásicos en una sola página: adivina el número, siete y medio
+        y piedra, papel o tijera.
+      </p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="tabs">
+      <button class="tab-button active" data-tab="tab-numero">Adivina el número</button>
+      <button class="tab-button" data-tab="tab-siete">Siete y medio</button>
+      <button class="tab-button" data-tab="tab-ppt">Piedra, papel o tijera</button>
+    </section>
+
+    <section id="tab-numero" class="panel active">
+      <h2>Adivina el número</h2>
+      <p class="descripcion">
+        Introduce un número entre 1 y 100 e intenta descubrir el número secreto.
+      </p>
+
+      <div class="caja-juego">
+        <div class="grupo-formulario">
+          <label for="inputNumero">Tu número</label>
+          <input type="number" id="inputNumero" min="1" max="100" placeholder="Escribe un número">
+        </div>
+
+        <div class="acciones">
+          <button id="btnComprobarNumero" class="btn btn-primario">Comprobar</button>
+          <button id="btnReiniciarNumero" class="btn">Nueva partida</button>
+        </div>
+
+        <div class="resultado">
+          <p><strong>Intentos:</strong> <span id="intentosNumero">0</span></p>
+          <p id="mensajeNumero" class="mensaje"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-siete" class="panel">
+      <h2>Siete y medio</h2>
+      <p class="descripcion">
+        Consigue acercarte a 7,5 sin pasarte. La máquina se planta al llegar a 6 o más.
+      </p>
+    
+      <div class="caja-juego">
+        <div class="marcadores">
+          <div class="marcador">
+            <h3>Jugador</h3>
+            <p class="puntuacion" id="puntuacionJugador">0</p>
+          </div>
+          <div class="marcador">
+            <h3>Máquina</h3>
+            <p class="puntuacion" id="puntuacionMaquina">0</p>
+          </div>
+        </div>
+    
+        <div class="acciones">
+          <button id="btnPedirCarta" class="btn btn-primario">Pedir carta</button>
+          <button id="btnPlantarse" class="btn">Plantarse</button>
+          <button id="btnNuevaPartidaSiete" class="btn">Nueva partida</button>
+        </div>
+    
+        <div class="resultado">
+          <p><strong>Última carta jugador:</strong> <span id="ultimaCartaJugador">-</span></p>
+          <p><strong>Última carta máquina:</strong> <span id="ultimaCartaMaquina">-</span></p>
+          <p id="mensajeSiete" class="mensaje"></p>
+        </div>
+    
+        <div class="zona-cartas">
+          <div class="bloque-cartas">
+            <h3>Cartas del jugador</h3>
+            <div id="cartasJugador" class="cartas-contenedor"></div>
+          </div>
+    
+          <div class="bloque-cartas">
+            <h3>Cartas de la máquina</h3>
+            <div id="cartasMaquina" class="cartas-contenedor"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-ppt" class="panel">
+      <h2>Piedra, papel o tijera</h2>
+      <p class="descripcion">
+        Juega contra la máquina y guarda el historial de partidas.
+      </p>
+    
+      <div class="caja-juego">
+        <div class="acciones">
+          <button id="btnPiedra" class="btn btn-primario">Piedra</button>
+          <button id="btnPapel" class="btn btn-primario">Papel</button>
+          <button id="btnTijera" class="btn btn-primario">Tijera</button>
+          <button id="btnReiniciarPPT" class="btn">Borrar historial</button>
+        </div>
+    
+        <div class="resultado">
+          <p><strong>Jugador:</strong> <span id="eleccionJugador">-</span></p>
+          <p><strong>Máquina:</strong> <span id="eleccionMaquina">-</span></p>
+          <p id="mensajePPT" class="mensaje"></p>
+        </div>
+    
+        <div class="estadisticas">
+          <div class="stat">
+            <span>Total</span>
+            <strong id="totalPPT">0</strong>
+          </div>
+          <div class="stat">
+            <span>Ganadas</span>
+            <strong id="ganadasPPT">0</strong>
+          </div>
+          <div class="stat">
+            <span>Perdidas</span>
+            <strong id="perdidasPPT">0</strong>
+          </div>
+          <div class="stat">
+            <span>Empates</span>
+            <strong id="empatadasPPT">0</strong>
+          </div>
+        </div>
+    
+        <div class="historial">
+          <h3>Historial de partidas</h3>
+          <ul id="listaHistorialPPT" class="lista-historial">
+            <li class="vacio">Todavía no se ha jugado ninguna partida.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
